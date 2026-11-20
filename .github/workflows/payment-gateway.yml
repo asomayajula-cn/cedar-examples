@@ -1,0 +1,27 @@
+name: payment-gateway
+
+on:
+  pull_request:
+    paths:
+      - "payment-gateway/**"
+      - "docker/payment-gateway/**"
+      - "k8s/payment-gateway/**"
+      - "terraform/payment-gateway/**"
+      - ".github/workflows/payment-gateway.yml"
+  push:
+    branches: [main]
+    paths:
+      - "payment-gateway/**"
+      - "docker/payment-gateway/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - run: mvn -B -pl payment-gateway -am test
