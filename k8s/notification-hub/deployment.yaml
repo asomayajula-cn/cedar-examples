@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-hub
+  namespace: cedar-examples
+  labels:
+    app: notification-hub
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: notification-hub
+  template:
+    metadata:
+      labels:
+        app: notification-hub
+    spec:
+      containers:
+        - name: notification-hub
+          image: ghcr.io/asomayajula-cn/notification-hub:main
+          ports:
+            - name: http
+              containerPort: 8082
+          env:
+            - name: PORT
+              value: "8082"
+            - name: NOTIFY_FROM
+              value: noreply@example.com
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: http

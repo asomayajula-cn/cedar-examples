@@ -1,0 +1,27 @@
+name: notification-hub
+
+on:
+  pull_request:
+    paths:
+      - "notification-hub/**"
+      - "docker/notification-hub/**"
+      - "k8s/notification-hub/**"
+      - "terraform/notification-hub/**"
+      - ".github/workflows/notification-hub.yml"
+  push:
+    branches: [main]
+    paths:
+      - "notification-hub/**"
+      - "docker/notification-hub/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - run: mvn -B -pl notification-hub -am test
