@@ -1,0 +1,50 @@
+# Same path model as somayaj/cedar. First match wins.
+
+components:
+  - id: domain
+    name: Domain layer · DDD
+    paths:
+      - "**/src/main/java/**/domain/**"
+    depends_on: []
+
+  - id: application
+    name: Application layer · DDD
+    paths:
+      - "**/src/main/java/**/application/**"
+    depends_on: [domain]
+
+  - id: infrastructure
+    name: Infrastructure · DDD
+    paths:
+      - "**/src/main/java/**/infrastructure/**"
+    depends_on: [domain, application]
+
+  - id: api
+    name: API adapters · DDD
+    paths:
+      - "**/src/main/java/**/api/**"
+    depends_on: [application, domain]
+
+  - id: config
+    name: Runtime config · 12-factor
+    paths:
+      - "**/src/main/resources/**"
+    depends_on: []
+
+  - id: build_deploy
+    name: Build & release · 12-factor
+    paths:
+      - "**/pom.xml"
+      - "Dockerfile*"
+    depends_on: []
+
+  - id: infra
+    name: Platform & ops · 12-factor
+    paths:
+      - ".github/**"
+      - "terraform/**"
+      - "k8s/**"
+      - "docker/**"
+    depends_on: []
+
+default_component: misc

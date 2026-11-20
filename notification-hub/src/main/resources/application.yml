@@ -1,0 +1,12 @@
+server:
+  port: ${PORT:8082}
+
+spring:
+  application:
+    name: notification-hub
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
