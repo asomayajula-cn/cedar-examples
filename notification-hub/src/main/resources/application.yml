@@ -10,3 +10,7 @@ management:
     web:
       exposure:
         include: health
+
+cedar:
+  notify:
+    default-from: ${NOTIFY_FROM:noreply@example.com}
